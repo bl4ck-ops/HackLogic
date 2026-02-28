@@ -53,7 +53,7 @@
             border-radius: 10px;
         }
 
-        /* Premium HUD HUD UI */
+        /* Premium HUD UI */
         .hud-card {
             background: var(--charcoal);
             border: 1px solid rgba(0, 255, 195, 0.1);
@@ -112,6 +112,14 @@
             color: #FF0000;
             font-weight: 900;
         }
+
+        .hero-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0, 255, 195, 0.2);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
     </style>
 </head>
 
@@ -128,7 +136,7 @@
                         <span class="text-electric neon-shadow">HACK</span>LOGIC
                     </span>
                     <span class="font-hud text-[9px] text-slate-500 uppercase tracking-[0.5em] font-bold">Presentation
-                        Protocol v2.4</span>
+                        Protocol v2.5</span>
                 </div>
             </div>
             <div
@@ -141,68 +149,77 @@
         </div>
     </nav>
 
+    <!-- Header Section with Cover -->
+    <header class="relative space-y-10">
+        <img src="Cover.png" alt="HACKLOGIC COVER" class="hero-cover" onerror="this.style.display='none'">
+        <div class="max-w-7xl mx-auto px-8 py-10 text-right space-y-8">
+            <div class="inline-flex items-center gap-3 px-4 py-2 bg-electric/10 border border-electric/40 text-electric font-hud text-[12px] font-black tracking-[0.2em] uppercase rounded-sm"
+                dir="ltr">
+                <span class="w-2 h-2 bg-electric rounded-full"></span> [CATEGORY_TAG]
+            </div>
+            [HERO_TITLE_AND_BODY]
+        </div>
+    </header>
+
     <main class="max-w-7xl mx-auto px-8 py-24 space-y-32">
 
-        <!-- Header Placeholder -->
-        <header class="max-w-5xl mx-auto space-y-10 text-right">
-            [HERO_CONTENT]
-        </header>
+        <!-- 0x01: Vulnerability (Bigger Blocks + Chart Below) -->
+        <section id="vulnerability" class="scroll-mt-32 space-y-16">
+            <div class="flex items-center gap-6 flex-row-reverse" dir="ltr">
+                <div class="font-hud text-4xl font-black text-white/10 italic">0x01</div>
+                <h2 class="font-hud text-3xl font-black text-white tracking-[0.2em] uppercase">Vulnerability_Root</h2>
+                <div class="flex-grow h-[2px] bg-gradient-to-l from-electric/20 to-transparent"></div>
+            </div>
 
-        <!-- 0x01: Vulnerability (Expanded Statements + Dual Chart) -->
-        <section id="vulnerability" class="scroll-mt-32">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-16">
-                <div class="lg:col-span-3 space-y-12 text-right">
-                    <div class="flex items-center gap-6 flex-row-reverse" dir="ltr">
-                        <div class="font-hud text-4xl font-black text-white/10 italic">0x01</div>
-                        <h2 class="font-hud text-3xl font-black text-white tracking-[0.2em] uppercase">
-                            Vulnerability_Root</h2>
-                        <div class="flex-grow h-[2px] bg-gradient-to-l from-electric/20 to-transparent"></div>
-                    </div>
+            <div class="max-w-5xl mr-auto space-y-10">
+                <p
+                    class="text-2xl text-slate-200 leading-relaxed font-black border-r-4 border-insight/60 pr-8 text-right">
+                    [CORE_DESCRIPTION]
+                </p>
 
-                    <div class="space-y-8">
-                        <p class="text-xl text-slate-200 leading-relaxed font-bold border-r-4 border-insight/40 pr-6">
-                            [CORE_VULNERABILITY_DESCRIPTION]
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div class="hud-card p-6 border-electric/30">
-                                <span
-                                    class="font-hud text-[10px] text-electric uppercase font-black tracking-widest block mb-4"
-                                    dir="ltr">Vector: Analysis</span>
-                                <p class="text-sm font-bold text-slate-400 leading-relaxed">
-                                    [ANALYSIS_VECTOR_STATEMENT]
-                                </p>
-                            </div>
-                            <div class="hud-card p-6 border-insight/30">
-                                <span
-                                    class="font-hud text-[10px] text-insight uppercase font-black tracking-widest block mb-4"
-                                    dir="ltr">Vector: Prediction</span>
-                                <p class="text-sm font-bold text-slate-400 leading-relaxed">
-                                    [PREDICTION_DRIFT_STATEMENT]
-                                </p>
-                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Vector 1: Big Block -->
+                    <div class="hud-card border-r-4 border-r-electric bg-charcoal/40 overflow-hidden">
+                        <div class="p-8 space-y-4">
+                            <span class="font-hud text-[11px] text-electric uppercase font-black tracking-[0.3em] block"
+                                dir="ltr">Vector: Analysis</span>
+                            <p class="text-lg font-bold text-slate-300 leading-relaxed text-right" dir="rtl">
+                                [VECTOR_1_CONTENT]
+                            </p>
                         </div>
                     </div>
-                </div>
-
-                <div class="lg:col-span-2">
-                    <div class="hud-card p-8 rounded-lg overflow-hidden border-white/5">
-                        <div class="flex justify-between items-center mb-8" dir="ltr">
-                            <span
-                                class="font-hud text-[10px] text-electric uppercase font-bold tracking-widest opacity-80">Telemetry:
-                                Cognitive_Drift_Log</span>
-                            <span
-                                class="text-insight bg-insight/10 px-2 text-[9px] font-black border border-insight/30 rounded-sm">LIVE</span>
-                        </div>
-                        <div class="chart-container" dir="ltr">
-                            <canvas id="driftChart"></canvas>
+                    <!-- Vector 2: Big Block -->
+                    <div class="hud-card border-r-4 border-r-insight bg-charcoal/40 overflow-hidden">
+                        <div class="p-8 space-y-4">
+                            <span class="font-hud text-[11px] text-insight uppercase font-black tracking-[0.3em] block"
+                                dir="ltr">Vector: Prediction</span>
+                            <p class="text-lg font-bold text-slate-300 leading-relaxed text-right" dir="rtl">
+                                [VECTOR_2_CONTENT]
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Chart Below Blocks -->
+            <div class="hud-card p-10 max-w-4xl mx-auto border-white/5">
+                <div class="flex justify-between items-center mb-8" dir="ltr">
+                    <span
+                        class="font-hud text-[10px] text-electric uppercase font-bold tracking-widest opacity-80">Telemetry:
+                        Cognitive_Drift_Log</span>
+                    <span
+                        class="text-insight bg-insight/10 px-2 text-[9px] font-black border border-insight/30 rounded-sm">DUAL_DATA_STREAM</span>
+                </div>
+                <div class="chart-container" dir="ltr">
+                    <canvas id="driftChart"></canvas>
+                </div>
+                <div class="mt-8 text-right text-slate-400 text-sm font-bold border-t border-white/5 pt-6">
+                    [CHART_01_EXPLANATION]
+                </div>
+            </div>
         </section>
 
-        <!-- 0x02: H2AI (Big Block Style) -->
+        <!-- 0x02: H2AI (Big Block Style + Increased Font) -->
         <section id="h2ai" class="scroll-mt-32 space-y-12">
             <div class="text-center mb-20">
                 <h3 class="font-hud text-4xl font-black text-white uppercase tracking-[0.4em]">0x02 // <span
@@ -210,22 +227,21 @@
                 <div class="h-1 w-24 bg-electric mx-auto mt-4 rounded-full"></div>
             </div>
 
-            <div class="grid gap-6">
-                <!-- Patch Template: Big Block -->
+            <div class="grid gap-8">
                 <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
-                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[160px]" dir="ltr">
                         <div
                             class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
                             <span
-                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">[H2AI_VECTOR]</span>
-                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">[PATCH_TITLE]
+                                class="font-hud text-[11px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">[VECTOR]</span>
+                            <h5 class="font-hud text-2xl font-black text-white uppercase tracking-wider">[PATCH_TITLE]
                             </h5>
                         </div>
-                        <div class="md:w-2/3 p-6 flex flex-col justify-center bg-black/40">
-                            <p class="text-slate-400 font-bold mb-4 text-right" dir="rtl">[PATCH_DESCRIPTION_ARABIC]</p>
-                            <div class="font-mono text-[10px] bg-obsidian p-4 border border-white/5 text-electric/80 leading-relaxed rounded-sm"
+                        <div class="md:w-2/3 p-10 flex flex-col justify-center bg-black/40">
+                            <p class="text-xl text-slate-300 font-black mb-6 text-right" dir="rtl">[DESCRIPTION]</p>
+                            <div class="font-mono text-[14px] bg-obsidian p-6 border border-white/5 text-electric/90 leading-loose rounded-sm"
                                 dir="ltr">
-                                [PATCH_DIRECTIVES_ENGLISH]
+                                [DIRECTIVES_ENGLISH]
                             </div>
                         </div>
                     </div>
@@ -233,7 +249,7 @@
             </div>
         </section>
 
-        <!-- 0x03: H2H (Big Block Style) -->
+        <!-- 0x03: H2H (Top 5 Tactics) -->
         <section id="h2h" class="scroll-mt-32 space-y-12">
             <div class="flex items-center gap-8 text-right">
                 <div class="flex-grow h-px bg-white/5"></div>
@@ -242,35 +258,24 @@
             </div>
 
             <div class="grid gap-6">
-                <!-- Tactic Template: Big Block -->
-                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
-                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
-                        <div
-                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
-                            <span
-                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">[VECTOR]</span>
-                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">[TACTIC_TITLE]
-                            </h5>
-                        </div>
-                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
-                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
-                                dir="rtl">
-                                "[TACTIC_SCRIPT_ARABIC]"
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                [TOP_5_TACTICS]
             </div>
         </section>
 
         <!-- 0x04: Telemetry -->
-        <section id="telemetry" class="scroll-mt-32">
-            <div class="text-center mb-16">
-                <h3 class="font-hud text-sm font-bold text-slate-600 uppercase tracking-[0.7em]">0x04 //
-                    TELEMETRY_DEEP_SCAN</h3>
+        <section id="telemetry" class="scroll-mt-32 space-y-12">
+            <div class="text-center">
+                <h3 class="font-hud text-3xl font-black text-white uppercase tracking-[0.4em]">0x04 // TELEMETRY_SCAN
+                </h3>
             </div>
-            <div class="hud-card p-8 rounded-2xl bg-black border-white/5">
+            <div class="hud-card p-12 bg-black border-white/5">
                 <div id="telemetryPlot" class="w-full h-[550px]" dir="ltr"></div>
+                <div class="mt-12 max-w-3xl mx-auto text-right space-y-4">
+                    <h5 class="font-hud text-electric text-sm font-black uppercase tracking-widest">>> ANALYST_NOTE</h5>
+                    <p class="text-lg text-slate-400 font-bold leading-relaxed">
+                        [TELEMETRY_EXPLANATION]
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -281,12 +286,16 @@
 
     </main>
 
-    <footer class="py-24 border-t border-white/5 text-center bg-black/80">
-        <div class="max-w-7xl mx-auto space-y-10">
-            <img src="Logo.png" alt="HL" class="h-8 mx-auto opacity-30 grayscale hover:grayscale-0 transition-all"
+    <footer class="py-24 border-t border-white/5 text-center bg-black">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <img src="Logo.png" alt="HL"
+                class="h-16 mx-auto opacity-80 grayscale hover:grayscale-0 transition-all cursor-pointer"
                 onerror="this.style.display='none'">
-            <div class="font-hud text-[10px] text-slate-600 uppercase tracking-[1.5em] font-black">
-                HackLogic Protocol Optimized // EOF
+            <div class="font-hud text-2xl font-black text-white tracking-[0.5em] uppercase">
+                <span class="text-electric">HACK</span>LOGIC
+            </div>
+            <div class="font-hud text-[10px] text-slate-700 uppercase tracking-[1em] font-black">
+                Presentation Protocol v2.5 // SECURITY_OVERRIDE_ENABLED
             </div>
         </div>
     </footer>
