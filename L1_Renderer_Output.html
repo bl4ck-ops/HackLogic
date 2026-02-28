@@ -71,10 +71,6 @@
             text-shadow: 0 0 15px rgba(0, 255, 195, 0.5);
         }
 
-        .gold-glow {
-            text-shadow: 0 0 15px rgba(255, 184, 0, 0.5);
-        }
-
         .scanlines {
             position: fixed;
             top: 0;
@@ -132,7 +128,7 @@
                         <span class="text-electric neon-shadow">HACK</span>LOGIC
                     </span>
                     <span class="font-hud text-[9px] text-slate-500 uppercase tracking-[0.5em] font-bold">Presentation
-                        Protocol v2.2</span>
+                        Protocol v2.3</span>
                 </div>
             </div>
             <div
@@ -159,7 +155,7 @@
                     dir="ltr">
                     COGNITIVE FAULT<br>
                     <span
-                        class="text-electric text-3xl md:text-5xl neon-shadow tracking-normal font-bold italic opacity-80 uppercase">PREDICTIVE
+                        class="text-electric text-3xl md:text-5xl neon-shadow tracking-normal font-bold italic opacity-80 uppercase uppercase">PREDICTIVE
                         DISENGAGEMENT OVERRIDES</span>
                 </h1>
 
@@ -268,7 +264,7 @@
             </div>
         </section>
 
-        <!-- 0x03: H2H -->
+        <!-- 0x03: H2H (Big Block Style, 8 Tactics) -->
         <section id="h2h" class="scroll-mt-32 space-y-12">
             <div class="flex items-center gap-8 text-right">
                 <div class="flex-grow h-px bg-white/5"></div>
@@ -276,19 +272,162 @@
                         class="text-electric">H2H</span>_Tactics</h3>
             </div>
 
-            <div class="grid gap-8">
-                <div class="hud-card p-8 border-l-8 border-l-electric overflow-hidden">
-                    <div class="flex flex-col md:flex-row-reverse gap-10">
-                        <div class="md:w-1/3 text-right">
+            <div class="grid gap-6">
+                <!-- Tactic 1 -->
+                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
                             <span
-                                class="font-hud text-[10px] text-slate-500 font-black uppercase tracking-widest">Vector:
+                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">Vector:
                                 Social Logic</span>
-                            <h5 class="font-hud text-2xl font-black text-white mt-2">THE POLITE PIVOT</h5>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE POLITE PIVOT
+                            </h5>
                         </div>
-                        <div class="md:w-2/3 text-right">
-                            <div
-                                class="text-xl font-black text-electric/90 italic leading-tight bg-white/5 p-6 border border-white/5">
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
+                                dir="rtl">
                                 "ممكن توضيح سريع للنقطة دي قبل ما نتحرك للهدف الجاي؟"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 2 -->
+                <div class="hud-card border-l-4 border-l-insight bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-insight/50 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Interruption</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE PATTERN
+                                INTERRUPT</h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-insight/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "يا [الاسم].. بقالك 10 دقايق بتتكلم. محتاجين الخلاصة دلوقتي عشان الوقت."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 3 -->
+                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Decision Logic</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE BINARY
+                                OVERRIDE</h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "عشان نخلص التوهان ده.. هل إحنا بنتكلم في [الخيار أ] ولا [الخيار ب]؟ مفيش ثالث."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 4 -->
+                <div class="hud-card border-l-4 border-l-insight bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-insight/50 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Psychological Sink</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE SILENCE
+                                PROBE</h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-insight/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "السكوت ده معناه إننا متفقين ولا في داتا وقعت؟ اقطع الصمت ده بجواب."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 5 -->
+                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Stake Enforcer</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE FALSE EXIT
+                            </h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "أنا حاسس إننا بنلف في دايرة.. لو مفيش جديد ممكن ننهي الميتنج ده ونرجع بكرة؟"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 6 -->
+                <div class="hud-card border-l-4 border-l-insight bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-insight/50 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Logic Compression</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE BLUF
+                                ENFORCEMENT</h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-insight/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "ممكن تديني الخلاصة (The Baseline) في جملة واحدة؟ التفاصيل خليها بعدين."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 7 -->
+                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Scope Lock</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE CONTEXT
+                                RELOAD</h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "هو إحنا كنا بنهجم على أنهي مشكلة بالظبط؟ حاسس إن السكوب وسع وضعت منك."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tactic 8 -->
+                <div class="hud-card border-l-4 border-l-insight bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
+                            <span
+                                class="font-hud text-[9px] text-insight/50 font-black uppercase tracking-[0.3em] mb-1">Vector:
+                                Hard Termination</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">THE HARD EXIT
+                            </h5>
+                        </div>
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-insight/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "لو مفيش Action Plan واضحة في الـ 5 دقايق الجاية، أنا هضطر أقفل الـ Thread ده."
                             </div>
                         </div>
                     </div>
@@ -380,7 +519,7 @@
             <img src="Logo.png" alt="HL" class="h-8 mx-auto opacity-30 grayscale hover:grayscale-0 transition-all"
                 onerror="this.style.display='none'">
             <div class="font-hud text-[10px] text-slate-600 uppercase tracking-[1.5em] font-black">
-                HackLogic Protocol Optimized // Antigravity Core // EOF
+                HackLogic Protocol Optimized // EOF
             </div>
         </div>
     </footer>
@@ -435,7 +574,7 @@
         };
 
         const plotLayout = {
-            barmode: 'group', // Side-by-side to avoid overlap confusion
+            barmode: 'group',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#94a3b8', family: "'Cairo', 'Oxanium', sans-serif", size: 11 },

@@ -71,10 +71,6 @@
             text-shadow: 0 0 15px rgba(0, 255, 195, 0.5);
         }
 
-        .gold-glow {
-            text-shadow: 0 0 15px rgba(255, 184, 0, 0.5);
-        }
-
         .scanlines {
             position: fixed;
             top: 0;
@@ -112,9 +108,9 @@
             text-shadow: 0 0 10px var(--electric);
         }
 
-        /* YouTube Icon Color */
         .youtube-red {
             color: #FF0000;
+            font-weight: 900;
         }
     </style>
 </head>
@@ -132,7 +128,7 @@
                         <span class="text-electric neon-shadow">HACK</span>LOGIC
                     </span>
                     <span class="font-hud text-[9px] text-slate-500 uppercase tracking-[0.5em] font-bold">Presentation
-                        Protocol v2.2</span>
+                        Protocol v2.3</span>
                 </div>
             </div>
             <div
@@ -147,118 +143,22 @@
 
     <main class="max-w-7xl mx-auto px-8 py-24 space-y-32">
 
-        <!-- Hero -->
+        <!-- Header Placeholder -->
         <header class="max-w-5xl mx-auto space-y-10 text-right">
-            <div class="inline-flex items-center gap-3 px-4 py-1.5 bg-insight/10 border border-insight/40 text-insight font-hud text-[11px] font-black tracking-widest uppercase rounded-sm"
-                dir="ltr">
-                <span class="animate-pulse">●</span> STATUS: OPERATIONAL_REVIEW
-            </div>
-
-            <div class="space-y-6">
-                <h1 class="font-hud text-6xl md:text-8xl font-black tracking-tight text-white leading-[0.9] uppercase"
-                    dir="ltr">
-                    [LESSON_TITLE]<br>
-                    <span
-                        class="text-electric text-3xl md:text-5xl neon-shadow tracking-normal font-bold italic opacity-80 uppercase">[SUBTITLE]</span>
-                </h1>
-
-                <div class="hud-border-glow pr-10 max-w-3xl mr-auto">
-                    <p class="text-2xl md:text-3xl text-slate-300 font-black leading-tight">
-                        [ARABIC_HERO_TEXT]
-                    </p>
-                </div>
-            </div>
+            [HERO_CONTENT]
         </header>
 
-        <!-- 0x01 -->
+        <!-- 0x01: Vulnerability -->
         <section id="vulnerability" class="scroll-mt-32">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-16">
-                <div class="lg:col-span-3 space-y-12 text-right">
-                    <div class="flex items-center gap-6 flex-row-reverse" dir="ltr">
-                        <div class="font-hud text-4xl font-black text-white/10 italic">0x01</div>
-                        <h2 class="font-hud text-3xl font-black text-white tracking-[0.2em] uppercase">
-                            Vulnerability_Root</h2>
-                        <div class="flex-grow h-[2px] bg-gradient-to-l from-electric/20 to-transparent"></div>
-                    </div>
-
-                    <div class="space-y-8">
-                        <p class="text-xl text-slate-200 leading-relaxed font-bold border-r-4 border-insight/40 pr-6">
-                            [ARABIC_VULNERABILITY_DETAIL]
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 font-hud font-black text-xs uppercase tracking-widest"
-                            dir="ltr">
-                            <div
-                                class="hud-card p-4 border-electric/30 text-electric flex items-center justify-between">
-                                <span>Analyze Vector</span>
-                                <span class="text-[14px]">↗</span>
-                            </div>
-                            <div class="hud-card p-4 border-insight/30 text-insight flex items-center justify-between">
-                                <span>Predict Drift</span>
-                                <span class="text-[14px]">↘</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-2">
-                    <div class="hud-card p-8 rounded-lg overflow-hidden border-white/5">
-                        <div class="flex justify-between items-center mb-8" dir="ltr">
-                            <span
-                                class="font-hud text-[10px] text-electric uppercase font-bold tracking-widest opacity-80">Telemetry:
-                                Cognitive_Drift_Log</span>
-                            <span
-                                class="text-insight bg-insight/10 px-2 text-[9px] font-black border border-insight/30 rounded-sm">LIVE</span>
-                        </div>
-                        <div class="chart-container" dir="ltr">
-                            <canvas id="driftChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            [VULNERABILITY_CONTENT]
         </section>
 
         <!-- 0x02: H2AI -->
         <section id="h2ai" class="scroll-mt-32">
-            <div class="text-center mb-20">
-                <h3 class="font-hud text-4xl font-black text-white uppercase tracking-[0.4em]">0x02 // <span
-                        class="text-electric neon-shadow">H2AI</span>_PATCH</h3>
-                <div class="h-1 w-24 bg-electric mx-auto mt-4 rounded-full"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div
-                    class="hud-card p-10 group bg-obsidian border-white/5 hover:border-electric/50 transition-all duration-700">
-                    <div class="flex items-center justify-between mb-10 flex-row-reverse" dir="ltr">
-                        <h4 class="font-hud text-lg font-black text-white tracking-widest uppercase">[PATCH_ALPHA]</h4>
-                        <div class="p-2 bg-electric/10 rounded-full">
-                            <div class="w-3 h-3 bg-electric rounded-full"></div>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 font-bold mb-8 text-right">[PATCH_ALPHA_DESC_ARABIC]</p>
-                    <div class="font-mono text-[11px] bg-black p-5 border border-white/10 text-electric/80 leading-relaxed rounded-sm"
-                        dir="ltr">
-                        [CODE_BLOCK_ALPHA]
-                    </div>
-                </div>
-
-                <div
-                    class="hud-card p-10 group bg-obsidian border-white/5 hover:border-insight/50 transition-all duration-700">
-                    <div class="flex items-center justify-between mb-10 flex-row-reverse" dir="ltr">
-                        <h4 class="font-hud text-lg font-black text-white tracking-widest uppercase">[PATCH_BETA]</h4>
-                        <div class="px-2 py-1 border border-insight/30 text-insight text-[9px] font-black">HIGH_PRIORITY
-                        </div>
-                    </div>
-                    <p class="text-slate-400 font-bold mb-8 text-right">[PATCH_BETA_DESC_ARABIC]</p>
-                    <div class="font-mono text-[11px] bg-black p-5 border border-white/10 text-insight/80 leading-relaxed rounded-sm"
-                        dir="ltr">
-                        [CODE_BLOCK_BETA]
-                    </div>
-                </div>
-            </div>
+            [H2AI_CONTENT]
         </section>
 
-        <!-- 0x03: H2H -->
+        <!-- 0x03: H2H (Big Block Style) -->
         <section id="h2h" class="scroll-mt-32 space-y-12">
             <div class="flex items-center gap-8 text-right">
                 <div class="flex-grow h-px bg-white/5"></div>
@@ -266,153 +166,55 @@
                         class="text-electric">H2H</span>_Tactics</h3>
             </div>
 
-            <div class="grid gap-8">
-                <div class="hud-card p-8 border-l-8 border-l-electric overflow-hidden">
-                    <div class="flex flex-col md:flex-row-reverse gap-10">
-                        <div class="md:w-1/3 text-right">
+            <div class="grid gap-6">
+                <!-- Tactic Template: Big Block -->
+                <div class="hud-card border-l-4 border-l-electric bg-charcoal/50 overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-stretch min-h-[120px]" dir="ltr">
+                        <!-- Label Area -->
+                        <div
+                            class="md:w-1/3 p-8 flex flex-col justify-center border-r border-white/5 text-center bg-black/20">
                             <span
-                                class="font-hud text-[10px] text-slate-500 font-black uppercase tracking-widest">Vector:
-                                Social Logic</span>
-                            <h5 class="font-hud text-2xl font-black text-white mt-2">[TACTIC_TITLE_1]</h5>
+                                class="font-hud text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mb-1">[VECTOR]</span>
+                            <h5 class="font-hud text-xl font-black text-white uppercase tracking-wider">[TACTIC_TITLE]
+                            </h5>
                         </div>
-                        <div class="md:w-2/3 text-right">
-                            <div
-                                class="text-xl font-black text-electric/90 italic leading-tight bg-white/5 p-6 border border-white/5">
-                                "[TACTIC_SCRIPT_1_ARABIC]"
+                        <!-- Script Area -->
+                        <div class="md:w-2/3 p-6 flex items-center bg-black/40">
+                            <div class="w-full bg-obsidian p-6 border border-white/5 rounded-sm text-xl font-black text-electric/90 italic leading-tight text-right"
+                                dir="rtl">
+                                "[TACTIC_SCRIPT_ARABIC]"
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Repeat as needed -->
             </div>
         </section>
 
-        <!-- 0x04: Telemetry (FIXED) -->
+        <!-- 0x04: Telemetry -->
         <section id="telemetry" class="scroll-mt-32">
-            <div class="text-center mb-16">
-                <h3 class="font-hud text-sm font-bold text-slate-600 uppercase tracking-[0.7em]">0x04 //
-                    TELEMETRY_DEEP_SCAN</h3>
-            </div>
-            <div class="hud-card p-8 rounded-2xl bg-black border-white/5">
-                <!-- Legend Fix: More descriptive, non-overlapping via Plotly settings -->
-                <div id="telemetryPlot" class="w-full h-[550px]" dir="ltr"></div>
-            </div>
+            [TELEMETRY_CONTENT]
         </section>
 
-        <!-- 0x05: Resources (10 Total, 2 YouTube) -->
+        <!-- 0x05: Resources -->
         <section id="resources" class="scroll-mt-32">
-            <div class="flex items-center gap-8 mb-16" dir="ltr">
-                <h3 class="font-hud text-2xl font-black text-white flex items-center gap-5">
-                    <span class="text-electric neon-shadow">[0x05]</span> INTEL_ARCHIVE
-                </h3>
-                <div class="flex-grow h-[2px] bg-white/5"></div>
-            </div>
-
-            <div class="hud-card p-12 bg-charcoal/50">
-                <ol
-                    class="space-y-8 text-sm font-bold text-slate-400 list-decimal marker:text-electric marker:font-black border-r-2 border-white/5 pr-8">
-                    <!-- Resource Items Placeholder -->
-                    <li id="ref-1" class="transition-all duration-700 hover:text-white">
-                        Author Name. (Year). *Resource Title*. <a href="#" target="_blank"
-                            class="text-electric font-hud text-[10px] tracking-widest ml-4 hover:underline">>_FETCH_INTEL</a>
-                    </li>
-                    <!-- At least 2 YouTube items must look distinct -->
-                    <li id="ref-yt" class="transition-all duration-700 hover:text-white">
-                        Channel Name. (Year). *Video Title* [YouTube]. <a href="#" target="_blank"
-                            class="text-red-500 font-hud text-[10px] tracking-widest ml-4 hover:underline">>_STREAM_EYE</a>
-                    </li>
-                </ol>
-            </div>
+            [RESOURCES_CONTENT]
         </section>
 
     </main>
 
     <footer class="py-24 border-t border-white/5 text-center bg-black/80">
         <div class="max-w-7xl mx-auto space-y-10">
-            <img src="Logo.png" alt="HL"
-                class="h-8 mx-auto opacity-30 grayscale hover:grayscale-0 transition-all cursor-crosshair"
+            <img src="Logo.png" alt="HL" class="h-8 mx-auto opacity-30 grayscale hover:grayscale-0 transition-all"
                 onerror="this.style.display='none'">
             <div class="font-hud text-[10px] text-slate-600 uppercase tracking-[1.5em] font-black">
-                HackLogic Protocol Optimized // Antigravity Core // EOF
+                HackLogic Protocol Optimized // EOF
             </div>
         </div>
     </footer>
 
-    <script>
-        // Chart Config
-        const defaultChartFont = { family: "'Cairo', 'Oxanium', sans-serif", size: 12, weight: '900' };
+    [SCRIPTS]
 
-        // 0x01: Drift Analysis (Chart.js)
-        const dCtx = document.getElementById('driftChart').getContext('2d');
-        new Chart(dCtx, {
-            type: 'line',
-            data: {
-                labels: ['استقبال', 'توقع', 'سرحان', 'فصل', 'إعادة'],
-                datasets: [{
-                    label: 'الاتصال العقلي النشط',
-                    data: [98, 85, 20, 5, 95],
-                    borderColor: '#00FFC3',
-                    borderWidth: 4,
-                    pointRadius: 0,
-                    pointHoverRadius: 8,
-                    fill: true,
-                    backgroundColor: 'rgba(0, 255, 195, 0.05)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { rtl: true, bodyFont: defaultChartFont } },
-                scales: {
-                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#475569', font: { size: 10 } } },
-                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: defaultChartFont } }
-                }
-            }
-        });
-
-        // 0x04: Population Density (Plotly)
-        // FIX: Using 'group' barmode to prevent unintended overlapping mess, or improved transparency
-        const genData = (mean, std, count) => Array.from({ length: count }, () => (Math.random() * std) + mean);
-
-        const traceFluff = {
-            x: genData(5, 25, 1200),
-            name: 'بيانات مكررة (رغي AI)',
-            type: 'histogram',
-            marker: { color: '#FFB800', opacity: 0.75 },
-            hoverinfo: 'name+x'
-        };
-        const traceDense = {
-            x: genData(35, 45, 1200),
-            name: 'بيانات مركزة (BLUF)',
-            type: 'histogram',
-            marker: { color: '#00FFC3', opacity: 0.75 },
-            hoverinfo: 'name+x'
-        };
-
-        const plotLayout = {
-            barmode: 'group', // FIXED: No more messy overlap, bars are side-by-side or clearly grouped
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#94a3b8', family: "'Cairo', 'Oxanium', sans-serif", size: 11 },
-            showlegend: true,
-            legend: {
-                x: 0.5, y: -0.2,
-                orientation: 'h',
-                xanchor: 'center',
-                bgcolor: 'rgba(0,0,0,0.5)',
-                bordercolor: 'rgba(0,255,195,0.1)',
-                borderwidth: 1,
-                font: { size: 12, weight: 'bold' }
-            },
-            margin: { t: 50, b: 120, l: 60, r: 60 },
-            xaxis: { title: { text: 'مدة التركيز الفعلي (ثانية)', font: { weight: 'bold' } }, gridcolor: 'rgba(255,255,255,0.03)' },
-            yaxis: { title: { text: 'تكرار حالات السرحان', font: { weight: 'bold' } }, gridcolor: 'rgba(255,255,255,0.03)' },
-            bargap: 0.1,
-            bargroupgap: 0.05
-        };
-
-        Plotly.newPlot('telemetryPlot', [traceFluff, traceDense], plotLayout, { responsive: true, displayModeBar: false });
-    </script>
 </body>
 
 </html>
