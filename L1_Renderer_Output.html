@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackLogic: Predictive Disengagement</title>
+    <title>HACKLOGIC: L1_PREDICTIVE_DISENGAGEMENT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
@@ -12,29 +12,23 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700;900&display=swap"
         rel="stylesheet">
     <style>
+        :root {
+            --obsidian: #000000;
+            --charcoal: #121212;
+            --electric: #00FFC3;
+            --insight: #FFB800;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #000000;
+            background-color: var(--obsidian);
             color: #E2E8F0;
+            margin: 0;
+            padding: 0;
         }
 
         .font-orbitron {
             font-family: 'Orbitron', sans-serif;
-        }
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 450px;
-        }
-
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
         }
 
         ::-webkit-scrollbar {
@@ -42,14 +36,13 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: #000000;
+            background: var(--obsidian);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #00FFC3;
+            background: var(--electric);
         }
 
-        /* HackLogic HUD Effects */
         .hud-border {
             border: 1px solid rgba(0, 255, 195, 0.3);
             box-shadow: inset 0 0 10px rgba(0, 255, 195, 0.05);
@@ -65,276 +58,332 @@
 
         .bracket::before {
             content: '[';
-            color: #00FFC3;
+            color: var(--electric);
             margin-right: 4px;
         }
 
         .bracket::after {
             content: ']';
-            color: #00FFC3;
+            color: var(--electric);
             margin-left: 4px;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 100;
         }
 
         :target {
             background-color: rgba(0, 255, 195, 0.1);
-            border-right: 4px solid #00FFC3;
-            padding-right: 10px;
+            border-right: 4px solid var(--electric);
+            padding-right: 12px;
             transition: all 0.3s ease;
         }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        obsidian: '#000000',
-                        charcoal: '#121212',
-                        electric: '#00FFC3',
-                        insight: '#FFB800',
-                        slate: { 800: '#1E293B', 900: '#0F172A' }
-                    },
-                    fontFamily: {
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        montserrat: ['Montserrat', 'sans-serif'],
-                    }
-                }
-            }
+
+        .diff-box {
+            background: #0a0a0a;
+            border-right: 2px solid #ff4444;
+            border-left: 2px solid #44ff44;
+            padding: 1rem;
+            font-family: monospace;
+            direction: ltr;
+            font-size: 11px;
         }
-    </script>
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+    </style>
 </head>
 
-<body class="antialiased selection:bg-electric selection:text-obsidian" dir="rtl">
+<body class="antialiased selection:bg-electric selection:text-obsidian overflow-x-hidden">
+    <div class="scanlines"></div>
 
-    <!-- COMMAND INTERFACE NAV -->
+    <!-- Nav -->
     <nav class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-electric/20 p-4" dir="ltr">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="Logo.png" alt="HackLogic Logo"
+                <img src="Logo.png" alt="HL_LOGO"
                     class="h-10 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,255,195,0.8)]"
                     onerror="this.style.display='none'">
                 <div>
                     <h1 class="text-xl font-orbitron font-bold tracking-widest text-white"><span
                             class="text-electric neon-text-cyan">HACK</span>LOGIC</h1>
-                    <p class="text-[10px] font-orbitron text-slate-500 uppercase tracking-widest">Hacking Explained with
-                        Logic</p>
+                    <p class="text-[10px] font-orbitron text-slate-500 uppercase tracking-widest">Execution-Oriented
+                        Cyber Intel</p>
                 </div>
             </div>
-            <div class="hidden md:flex space-x-6 text-xs font-orbitron text-electric font-bold tracking-widest">
-                <a href="#core" class="hover:text-white transition-colors">-> VULNERABILITY</a>
-                <a href="#h2ai" class="hover:text-white transition-colors">-> H2AI_PATCH</a>
-                <a href="#h2h" class="hover:text-white transition-colors">-> H2H_PATCH</a>
+            <div class="hidden md:flex space-x-6 text-[10px] font-orbitron text-electric font-bold tracking-widest">
+                <a href="#vulnerability" class="hover:text-white transition-colors">>_VULNERABILITY</a>
+                <a href="#h2ai" class="hover:text-white transition-colors">>_H2AI_PATCH</a>
+                <a href="#h2h" class="hover:text-white transition-colors">>_H2H_PATCH</a>
+                <a href="#resources" class="hover:text-white transition-colors">>_RESOURCES</a>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24 relative overflow-hidden">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
 
-        <!-- EXECUTION SUMMARY HERO -->
-        <header class="max-w-4xl mx-auto space-y-6 text-right relative z-10">
-            <div class="inline-block px-3 py-1 bg-insight/10 border border-insight/50 text-insight text-xs font-orbitron font-bold tracking-widest uppercase mb-2"
+        <!-- Hero Section -->
+        <header class="max-w-4xl mx-auto text-right space-y-6">
+            <div class="inline-block px-3 py-1 bg-insight/10 border border-insight/50 text-insight text-[10px] font-orbitron font-bold tracking-[0.2em] mb-2"
                 dir="ltr">
-                STATUS: NEEDS REVIEW
+                [STATUS: NEEDS REVIEW]
             </div>
-            <h2 class="text-4xl md:text-5xl font-orbitron font-black tracking-tight text-white uppercase leading-tight"
+            <h2 class="text-4xl md:text-6xl font-orbitron font-black tracking-tighter text-white uppercase leading-none"
                 dir="ltr">
-                <span class="bracket text-electric neon-text-cyan">COGNITIVE FAULT</span><br>
-                PREDICTIVE DISENGAGEMENT
+                PATCHING COGNITIVE EXPLOITS<br>
+                <span class="text-electric neon-text-cyan text-3xl md:text-4xl italic tracking-normal">PREDICTIVE
+                    DISENGAGEMENT OVERRIDES</span>
             </h2>
-            <div class="border-r-2 border-electric pr-4" dir="rtl">
-                <p class="text-base text-gray-400 font-montserrat font-semibold leading-relaxed max-w-2xl">
-                    الـ Brain بتاعك شغال كـ Heuristic Scan Engine. لما المعلومات تكون Predictable (رغي مكرر أو AI
-                    بيهبد)، الدماغ بيعمل Shut Down عشان يوفر Computational Power. ده CPU Optimization بيتحول لـ DoS
-                    Attack ضد انتباهك.
+            <div class="border-r-4 border-electric pr-6">
+                <p class="text-lg text-gray-400 font-montserrat font-bold leading-relaxed max-w-2xl">
+                    دماغك أسرع من كلام اللي قدامك. أول ما بتتوقع الـ الخلاصة، السيستم بيفصل (Shut Down) عشان يوفر طاقة.
+                    ده ثغرة <span class="text-white">Predictive Disengagement</span>. حلها في كسر التوقعات.
                 </p>
             </div>
         </header>
 
-        <!-- THE BUG (Root Cause) -->
-        <section id="core" class="scroll-mt-24 relative z-10">
-            <img src="insight_brain.png" alt="Insight Brain"
-                class="absolute top-0 right-0 w-64 h-64 opacity-10 mix-blend-screen pointer-events-none"
-                onerror="this.style.display='none'">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 text-right">
-                    <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr">
-                        <span class="text-insight neon-text-gold">-> 0x01</span> Root Cause Analysis</h3>
-                    <div class="text-gray-300 text-sm font-montserrat leading-relaxed space-y-4">
-                        <p>العقل البشري هو Bayesian Prediction Machine. هو بيخمن الخطوة الجاية (Unconscious Inference).
-                            لو الدنيا ماشية زي ما هو متوقع تماماً (Repetition Suppression)، الـ Dopamine firing بينزل
-                            للأرض، وكفاءة المعالجة بتبوظ.</p>
-                        <ul class="list-none space-y-2 pr-4 border-r border-electric/30 font-bold">
-                            <li>-> Identify the threat.</li>
-                            <li>-> Isolate the cognitive bug.</li>
-                            <li>-> Deploy operational patches.</li>
-                        </ul>
-                        <div class="bg-charcoal p-4 hud-border">
-                            <h5 class="font-bold text-white mb-3 font-orbitron text-xs tracking-widest uppercase text-electric"
-                                dir="ltr">Hardware Fail: عيني بتزغلل</h5>
-                            <p class="text-xs italic">حالة "بفصل" هي Hardware Disconnect حقيقي. الـ Visual Cortex بيفصل
-                                الداتا عشان شايفها مكررة (Redundant Stimuli).</p>
-                        </div>
+        <!-- 0x01: Root Cause -->
+        <section id="vulnerability" class="scroll-mt-24 border-t border-gray-800 pt-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="space-y-8 text-right">
+                    <div class="flex items-center gap-4 flex-row-reverse" dir="ltr">
+                        <h3 class="text-2xl font-orbitron font-black text-white uppercase tracking-widest"><span
+                                class="text-insight neon-text-gold">0x01</span> // ROOT_CAUSE</h3>
+                        <div class="h-[1px] bg-insight/30 flex-grow"></div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 font-montserrat leading-relaxed">
+                        <p>عقلك مش بيستقبل داتا بس، ده "آلة توقع" (Prediction Machine).</p>
+                        <p class="font-bold border-r-2 border-insight/50 pr-4 italic text-sm">
+                            -> حلل بيئة العمل فوراً.<br>
+                            -> ركز في الـ Bayesian Brain.<br>
+                            -> اقطع الـ Repetition Suppression.
+                        </p>
+                        <p class="text-sm">لو الداتا متوقعة (Redundant)، الـ Dopamine بيموت والسيستم بيفصل. حالة "عيني
+                            بتزغلل" هي Hardware Disconnect صريح.</p>
+                    </div>
+
+                    <div class="diff-box">
+                        <span class="text-red-500 font-bold">- Passive Listening (Pattern Match)</span><br>
+                        <span class="text-red-500">- Predict Payload (Drop Connection)</span><br>
+                        <span class="text-green-500 font-bold">+ Force Prediction Error (Wake Up)</span><br>
+                        <span class="text-green-500">+ Inject Novelty (Recalculate Precision)</span>
                     </div>
                 </div>
-                <div class="bg-charcoal p-5 hud-border relative">
-                    <div class="absolute top-2 right-2 text-[10px] font-orbitron text-electric opacity-50" dir="ltr">
-                        TELEMETRY_LOG // COGNITIVE_DRIFT</div>
-                    <div class="chart-container" dir="ltr">
-                        <canvas id="driftChart"></canvas>
+
+                <div class="bg-charcoal p-6 hud-border relative">
+                    <div class="absolute top-3 right-3 text-[9px] font-orbitron text-electric opacity-40 uppercase tracking-widest"
+                        dir="ltr">DRIVE_TELEMETRY // COGNITIVE_LOAD</div>
+                    <div class="chart-container mt-6" dir="ltr">
+                        <canvas id="telemetryChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- H2AI PROTOCOL -->
-        <section id="h2ai" class="scroll-mt-24 border-t border-gray-800 pt-16 relative z-10">
-            <div class="mb-10 max-w-3xl text-right">
-                <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr"><span
-                        class="text-electric neon-text-cyan">-> 0x02</span> H2AI Protocol</h3>
-                <p class="text-gray-400 font-montserrat text-sm mt-4">الـ AI بيميل للرغي (Generative Padding). ده بيعمل
-                    Camouflage للداتا المهمة. Enforce structure immediately.</p>
+        <!-- 0x02: H2AI Protocol -->
+        <section id="h2ai" class="scroll-mt-24 border-t border-gray-800 pt-16">
+            <div class="max-w-3xl text-right mb-12">
+                <h3 class="text-2xl font-orbitron font-black text-white uppercase tracking-widest mb-4" dir="ltr"><span
+                        class="text-electric neon-text-cyan">0x02</span> // H2AI_PATCH</h3>
+                <p class="text-gray-400 font-montserrat text-sm italic">الـ AI مبرمج على اللف والدوران (Padding). ده
+                    بيعمل DoS لانتباهك البشري. اطبق الـ Rules دي فوراً.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
-                <div class="bg-charcoal p-6 hud-border hover:border-electric transition-colors flex flex-col items-end">
-                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-charcoal p-6 hud-border space-y-4">
+                    <div class="flex justify-between items-center flex-row-reverse" dir="ltr">
                         <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">Chain of
                             Density (CoD)</h4>
                         <span
-                            class="text-[10px] font-orbitron text-electric bg-electric/10 px-2 py-1 border border-electric/20 uppercase">Execute</span>
+                            class="text-[9px] font-orbitron text-electric bg-electric/10 px-2 py-0.5 border border-electric/30">PATCH:ACTIVE</span>
                     </div>
-                    <p class="text-gray-400 text-sm mb-4 font-montserrat">لأقصى درجة من الـ Density. إجبار الموديل إنه
-                        يشيل الـ Filler Words ويدمج المفاهيم (Semantic Fusion).</p>
-                    <div class="bg-obsidian p-4 border-r-2 border-electric font-orbitron text-[10px] text-electric tracking-wide uppercase leading-loose text-left w-full"
+                    <p class="text-xs text-gray-400 text-right leading-relaxed font-montserrat">
+                        -> امنع الـ Generative Padding.<br>
+                        -> اطلب دمج المفاهيم (Semantic Fusion).<br>
+                        -> ثبت طول الـ Output.
+                    </p>
+                    <div class="bg-obsidian/80 p-4 border-r-2 border-electric font-orbitron text-[10px] text-electric tracking-widest uppercase leading-loose text-left"
                         dir="ltr">
-                        -> STEP 1: IDENTIFY MISSING ENTITIES.<br>
-                        -> STEP 2: FUSE INTO PREVIOUS SUMMARY.<br>
-                        -> CONSTRAINT: FIXED TOKEN LENGTH.
+                        IDENTIFY MISSING ENTITIES -> FUSE INTO SUMMARY -> REDUCE NOISE -> REPEAT 5X.
                     </div>
                 </div>
-                <div class="bg-charcoal p-6 hud-border hover:border-insight transition-colors flex flex-col items-end">
-                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
-                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">Stop-Gen
-                            Parameters</h4>
+
+                <div class="bg-charcoal p-6 hud-border space-y-4">
+                    <div class="flex justify-between items-center flex-row-reverse" dir="ltr">
+                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">The Stop-Gen
+                            Break</h4>
                         <span
-                            class="text-[10px] font-orbitron text-insight bg-insight/10 px-2 py-1 border border-insight/20 uppercase">Override</span>
+                            class="text-[9px] font-orbitron text-insight bg-insight/10 px-2 py-0.5 border border-insight/30">PATCH:MANDATORY</span>
                     </div>
-                    <p class="text-gray-400 text-sm mb-4 font-montserrat">لو الـ AI بدأ "يهبد" أو يلف ويدور، اقطع الـ
-                        Connection فوراً ونزل الـ Temperature لزيادة الـ Determinism.</p>
-                    <div class="bg-obsidian p-4 border-r-2 border-insight font-orbitron text-[10px] text-insight tracking-wide uppercase leading-loose text-left w-full"
+                    <p class="text-xs text-gray-400 text-right leading-relaxed font-montserrat">
+                        -> راقب الـ Token Prediction.<br>
+                        -> اقطع الـ Connection لو بدأ يهبد.<br>
+                        -> نزل الـ Temperature للصفر.
+                    </p>
+                    <div class="bg-obsidian/80 p-4 border-r-2 border-insight font-orbitron text-[10px] text-insight tracking-widest uppercase leading-loose text-left"
                         dir="ltr">
-                        -> LIMIT MAX TOKENS.<br>
-                        -> DEFINE STOP SEQUENCES.<br>
-                        -> DEPLOY DETERMINISTIC OVERRIDES.
+                        EXECUTE STOP-GEN -> LOWER TEMPERATURE -> STRIP VERBOSE LOGIC.
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- H2H PROTOCOL -->
-        <section id="h2h" class="scroll-mt-24 border-t border-gray-800 pt-16 relative z-10">
-            <div class="mb-10 max-w-3xl text-right">
-                <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr"><span
-                        class="text-electric neon-text-cyan">-> 0x03</span> H2H Protocol</h3>
-                <p class="text-gray-400 font-montserrat text-sm mt-4">إزاي تتعامل مع رغي البشر اللي بيسحب انتباهك
-                    (Bandwidth Monopolization).</p>
+        <!-- 0x03: H2H Protocol -->
+        <section id="h2h" class="scroll-mt-24 border-t border-gray-800 pt-16">
+            <div class="max-w-3xl text-right mb-12">
+                <h3 class="text-2xl font-orbitron font-black text-white uppercase tracking-widest mb-4" dir="ltr"><span
+                        class="text-electric neon-text-cyan">0x03</span> // H2H_PATCH</h3>
+                <p class="text-gray-400 font-montserrat text-sm italic">لما البشر يستهلكوا كل الـ Bandwidth برغي فاضي.
+                    استخدم الأسلحة دي فوراً.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
-                <div class="bg-charcoal p-6 hud-border flex flex-col items-end">
-                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
-                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">The Polite
+            <div class="space-y-6">
+                <!-- Patch 1 -->
+                <div class="bg-charcoal p-8 hud-border border-r-4 border-r-electric">
+                    <div class="flex justify-between items-center flex-row-reverse mb-6" dir="ltr">
+                        <h4 class="text-lg font-orbitron font-bold text-white tracking-widest uppercase">The Polite
                             Pivot</h4>
                         <span
-                            class="text-[10px] font-orbitron text-gray-400 bg-gray-800 px-2 py-1 border border-gray-700 uppercase">Coordination</span>
+                            class="text-[9px] font-orbitron text-gray-500 tracking-tighter uppercase px-2 py-1 bg-white/5 font-black border border-white/10">SOCIAL_BYPASS</span>
                     </div>
-                    <p class="text-gray-400 text-xs mb-4">اقطع الـ Infinite Loop بسياكة.</p>
-                    <div class="bg-obsidian p-4 border-r-2 border-electric font-montserrat font-semibold text-sm text-gray-300 w-full text-right"
-                        dir="rtl">
-                        "عفواً.. قبل ما نكمل، محتاج أوضّح نقطة عشان نبقى على نفس الـ Page."
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <p class="text-sm text-gray-300 font-montserrat leading-relaxed text-right">
+                            -> راقب الـ Pause.<br>
+                            -> اقطع الطريق بسياكة.<br>
+                            -> استرد الـ Bandwidth الضايع.
+                        </p>
+                        <div
+                            class="bg-black/50 p-6 border border-gray-800 text-right font-montserrat font-bold text-sm text-electric italic">
+                            "ممكن توضيح سريع للنقطة دي قبل ما نتحرك للخطوة الجاية؟"
+                        </div>
                     </div>
                 </div>
-                <div class="bg-charcoal p-6 hud-border flex flex-col items-end">
-                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
-                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">Pattern
+
+                <!-- Patch 2 -->
+                <div class="bg-charcoal p-8 hud-border border-r-4 border-r-insight">
+                    <div class="flex justify-between items-center flex-row-reverse mb-6" dir="ltr">
+                        <h4 class="text-lg font-orbitron font-bold text-white tracking-widest uppercase">The Pattern
                             Interrupt</h4>
                         <span
-                            class="text-[10px] font-orbitron text-insight bg-insight/10 px-2 py-1 border border-insight/20 uppercase">Interruption</span>
+                            class="text-[9px] font-orbitron text-insight/80 tracking-tighter uppercase px-2 py-1 bg-insight/10 font-black border border-insight/20">SYSTEM_REBOOT</span>
                     </div>
-                    <p class="text-gray-400 text-xs mb-4">اكسر الـ Cognitive Loop بتاع اللي قدامك.</p>
-                    <div class="bg-obsidian p-4 border-r-2 border-insight font-montserrat font-semibold text-sm text-gray-300 w-full text-right"
-                        dir="rtl">
-                        "يا [اسم الهدف].. محتاجين نركز على الـ Numbers فوراً عشان الـ Deadline."
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <p class="text-sm text-gray-300 font-montserrat leading-relaxed text-right">
+                            -> اكسر الـ Loop النفسي.<br>
+                            -> اواجه الهدف بالواقع (Mr. Charles).<br>
+                            -> كرر الاسم بلهجة ميتة (Robotic Tone).
+                        </p>
+                        <div
+                            class="bg-black/50 p-6 border border-gray-800 text-right font-montserrat font-bold text-sm text-insight italic">
+                            "يا إبراهيم.. بقالك 10 دقايق بتتكلم. هقطعك دلوقتي عشان نخلص المشروع."
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- DATA / PLOTLY -->
-        <section class="border-t border-gray-800 pt-16 mb-20 text-right relative z-10">
-            <h3 class="text-sm font-orbitron font-bold text-white mb-6 uppercase tracking-widest" dir="ltr">DIAGNOSTICS:
-                FLUFF VS DENSITY <span class="text-electric"><-< /span></h3>
-            <div class="bg-charcoal p-2 hud-border relative">
-                <div class="absolute top-2 right-2 text-[10px] font-orbitron text-electric opacity-50 z-10" dir="ltr">
-                    DENSITY_PLOT</div>
-                <div id="densityPlot" class="w-full h-[400px]" dir="ltr"></div>
+        <!-- 0x04: Telemetry Visualization -->
+        <section id="telemetry" class="scroll-mt-24 border-t border-gray-800 pt-16">
+            <h3 class="text-sm font-orbitron font-bold text-white mb-8 uppercase tracking-[0.3em] text-center"
+                dir="ltr">0x04 // TELEMETRY_VISUALIZATION (FLUFF_DENSITY)</h3>
+            <div class="bg-charcoal p-4 hud-border">
+                <div id="densityPlot" class="w-full h-[450px]" dir="ltr"></div>
             </div>
         </section>
 
-        <!-- REFERENCES -->
-        <section id="resources" class="border-t border-gray-800 pt-16 relative z-10">
-            <h3 class="text-sm font-orbitron font-bold text-white mb-6 uppercase tracking-widest" dir="ltr">Intel
-                Resources</h3>
-            <div class="hud-border bg-charcoal p-6">
-                <ol class="space-y-4 text-[10px] font-mono list-decimal pr-4">
-                    <li id="ref-1">Defense.com. (2026). *The Ultimate Cyber Security Glossary*. <a
+        <!-- 0x05: Resources -->
+        <section id="resources" class="scroll-mt-24 border-t border-gray-800 pt-16 mb-32">
+            <h3 class="text-sm font-orbitron font-bold text-white mb-8 uppercase tracking-[0.3em] text-right" dir="ltr">
+                0x05 // INTEL_RESOURCES</h3>
+            <div class="bg-charcoal hud-border p-8">
+                <ol class="space-y-6 text-[11px] font-mono text-gray-400">
+                    <li id="ref-1" class="transition-all duration-500">
+                        [1] Defense.com. (2026). *The Ultimate Cyber Security Glossary*. <a
                             href="https://www.defense.com/cyber-security-glossary" target="_blank"
-                            class="text-electric hover:underline">[LINK]</a></li>
-                    <li id="ref-3">Oxford University. (2026). *The brain is a prediction machine*. <a
+                            class="text-electric hover:underline">[LINK_INTEL]</a>
+                    </li>
+                    <li id="ref-3" class="transition-all duration-500">
+                        [3] Oxford University. (2026). *The brain is a prediction machine: It knows how well we are
+                        doing something before we even try*. <a
                             href="https://www.psy.ox.ac.uk/news/the-brain-is-a-prediction-machine" target="_blank"
-                            class="text-electric hover:underline">[LINK]</a></li>
-                    <li id="ref-8">Wikipedia. (2026). *Cognitive disengagement syndrome*. <a
+                            class="text-electric hover:underline">[LINK_INTEL]</a>
+                    </li>
+                    <li id="ref-4" class="transition-all duration-500">
+                        [4] Wikipedia. (2026). *Predictive coding*. <a
+                            href="https://en.wikipedia.org/wiki/Predictive_coding" target="_blank"
+                            class="text-electric hover:underline">[LINK_INTEL]</a>
+                    </li>
+                    <li id="ref-8" class="transition-all duration-500">
+                        [8] Wikipedia. (2026). *Cognitive disengagement syndrome*. <a
                             href="https://en.wikipedia.org/wiki/Cognitive_disengagement_syndrome" target="_blank"
-                            class="text-electric hover:underline">[LINK]</a></li>
+                            class="text-electric hover:underline">[LINK_INTEL]</a>
+                    </li>
+                    <li id="ref-17" class="transition-all duration-500">
+                        [17] PromptHub. (2026). *Better Summarization with Chain of Density Prompting*. <a
+                            href="https://www.prompthub.us/blog/better-summarization-with-chain-of-density-prompting"
+                            target="_blank" class="text-electric hover:underline">[LINK_INTEL]</a>
+                    </li>
                 </ol>
             </div>
         </section>
 
     </main>
 
-    <footer class="border-t border-gray-900 py-6 text-center bg-obsidian" dir="ltr">
-        <p class="text-gray-600 font-orbitron text-[10px] uppercase tracking-widest">
-            <span class="text-electric">HACKLOGIC</span> // Execution Control + High-Tempo Accountability // EOF
-        </p>
+    <footer class="border-t border-gray-900 py-10 text-center bg-obsidian/50 backdrop-blur-sm" dir="ltr">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <img src="Logo.png" alt="HL_LOGO_MINI" class="h-6 mx-auto opacity-20 grayscale"
+                onerror="this.style.display='none'">
+            <p class="text-gray-600 font-orbitron text-[9px] uppercase tracking-[0.5em]">
+                <span class="text-electric">HACKLOGIC_RENDERER_v2.0</span> // ANTIGRAVITY_ENGINE // EOF
+            </p>
+        </div>
     </footer>
 
     <script>
-        Chart.defaults.color = '#9CA3AF';
+        // Chart Defaults
+        Chart.defaults.color = 'rgba(255,255,255,0.4)';
         Chart.defaults.font.family = "'Orbitron', sans-serif";
+        Chart.defaults.font.size = 9;
 
-        // DRIFT CHART
-        const ctxDrift = document.getElementById('driftChart').getContext('2d');
-        new Chart(ctxDrift, {
+        // Telemetry Line Chart
+        const tCtx = document.getElementById('telemetryChart').getContext('2d');
+        new Chart(tCtx, {
             type: 'line',
             data: {
-                labels: ['START', 'PROCESS', 'IDLE', 'DROP', 'REBOOT'],
+                labels: ['T-10 (Pre)', 'T-5 (Match)', 'NOW (Drop)', 'REBOOT'],
                 datasets: [
                     {
-                        label: 'Active Processing',
-                        data: [95, 80, 25, 5, 90],
-                        borderColor: '#00FFC3',
-                        backgroundColor: 'rgba(0, 255, 195, 0.05)',
+                        label: 'Internal Prediction Confidence',
+                        data: [20, 70, 98, 40],
+                        borderColor: '#FFB800',
                         borderWidth: 2,
-                        tension: 0,
-                        fill: true
+                        pointRadius: 3,
+                        pointBackgroundColor: '#FFB800',
+                        fill: false
                     },
                     {
-                        label: 'Prediction Baseline',
-                        data: [20, 50, 95, 99, 30],
-                        borderColor: '#FFB800',
-                        borderWidth: 1,
-                        borderDash: [5, 5],
-                        tension: 0,
-                        fill: false
+                        label: 'Active Attentional Bandwidth',
+                        data: [95, 80, 5, 88],
+                        borderColor: '#00FFC3',
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#00FFC3',
+                        backgroundColor: 'rgba(0, 255, 195, 0.05)',
+                        fill: true,
+                        tension: 0.2
                     }
                 ]
             },
@@ -342,38 +391,39 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: true, position: 'top', labels: { boxWidth: 8, font: { size: 8 } } }
+                    legend: { position: 'top', align: 'end', labels: { boxWidth: 10, padding: 20 } }
                 },
                 scales: {
-                    y: { beginAtZero: true, max: 100, grid: { color: '#1E293B' }, ticks: { font: { size: 8 } } },
-                    x: { grid: { color: '#1E293B' }, ticks: { font: { size: 8 } } }
+                    y: { beginAtZero: true, max: 100, border: { display: false }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
                 }
             }
         });
 
-        // PLOTLY DENSITY
+        // Plotly Density Plot
         const trace1 = {
-            x: Array.from({ length: 500 }, () => Math.random() * 30),
+            x: Array.from({ length: 800 }, () => Math.random() * 40),
+            name: 'Redundant Fluff',
             type: 'histogram',
-            name: 'Fluff (Brain Crashes)',
-            marker: { color: '#FFB800', opacity: 0.7 }
+            marker: { color: '#FFB800', opacity: 0.6 }
         };
         const trace2 = {
-            x: Array.from({ length: 500 }, () => Math.random() * 40 + 20),
+            x: Array.from({ length: 800 }, () => (Math.random() * 50) + 20),
+            name: 'Information Density',
             type: 'histogram',
-            name: 'Dense (Attention Held)',
-            marker: { color: '#00FFC3', opacity: 0.7 }
+            marker: { color: '#00FFC3', opacity: 0.6 }
         };
-        Plotly.newPlot('densityPlot', [trace1, trace2], {
+        const layout = {
             barmode: 'overlay',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#9CA3AF', family: "'Orbitron', sans-serif", size: 8 },
-            margin: { t: 40, b: 30, l: 30, r: 10 },
-            legend: { orientation: 'h', x: 0.5, y: 1.15, xanchor: 'center' },
-            xaxis: { gridcolor: '#1E293B' },
-            yaxis: { gridcolor: '#1E293B' }
-        }, { displayModeBar: false });
+            font: { color: '#888', family: "'Orbitron', sans-serif", size: 10 },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.05)', title: 'DOPAMINE_PRECISION_WEIGHT' },
+            yaxis: { gridcolor: 'rgba(255,255,255,0.05)', title: 'FREQUENCY' },
+            legend: { x: 0.5, y: 1.1, orientation: 'h', xanchor: 'center' },
+            margin: { t: 40, b: 40, l: 40, r: 20 }
+        };
+        Plotly.newPlot('densityPlot', [trace1, trace2], layout, { displayModeBar: false });
     </script>
 </body>
 
