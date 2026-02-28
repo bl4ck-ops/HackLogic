@@ -1,183 +1,301 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKLOGIC_HUD_V1.0</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Blueprints & CDNs -->
+    <title>HACKLOGIC: [LESSON_TITLE]</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700;900&display=swap"
+        rel="stylesheet">
     <style>
-        :root {
-            --obsidian: #000000;
-            --charcoal: #121212;
-            --electric-cyan: #00FFC3;
-            --insight-gold: #FFB800;
-        }
-
         body {
-            background-color: var(--obsidian);
-            color: #ffffff;
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
+            background-color: #000000;
+            color: #E2E8F0;
         }
 
-        .orbitron { font-family: 'Orbitron', sans-serif; }
-        
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00FFC3;
+        }
+
+        /* HackLogic HUD Effects */
         .hud-border {
-            border: 1px solid var(--electric-cyan);
-            box-shadow: 0 0 10px rgba(0, 255, 195, 0.2);
+            border: 1px solid rgba(0, 255, 195, 0.3);
+            box-shadow: inset 0 0 10px rgba(0, 255, 195, 0.05);
         }
 
-        .glow-cyan { text-shadow: 0 0 10px var(--electric-cyan); }
-        .glow-gold { text-shadow: 0 0 10px var(--insight-gold); }
-
-        .scanlines {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-            z-index: 50;
+        .neon-text-cyan {
+            text-shadow: 0 0 8px rgba(0, 255, 195, 0.6);
         }
 
-        /* References Highlight */
+        .neon-text-gold {
+            text-shadow: 0 0 8px rgba(255, 184, 0, 0.6);
+        }
+
+        .bracket::before {
+            content: '[';
+            color: #00FFC3;
+            margin-right: 4px;
+        }
+
+        .bracket::after {
+            content: ']';
+            color: #00FFC3;
+            margin-left: 4px;
+        }
+
         :target {
             background-color: rgba(0, 255, 195, 0.1);
-            border-right: 4px solid var(--electric-cyan);
+            border-right: 4px solid #00FFC3;
             padding-right: 10px;
             transition: all 0.3s ease;
         }
-
-        .diff-box {
-            background: #1a1a1a;
-            border-right: 2px solid #ff4444;
-            border-left: 2px solid #44ff44;
-            padding: 1rem;
-            font-family: monospace;
-        }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#000000',
+                        charcoal: '#121212',
+                        electric: '#00FFC3',
+                        insight: '#FFB800',
+                        slate: { 800: '#1E293B', 900: '#0F172A' }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="p-4 md:p-8">
-    <div class="scanlines"></div>
 
-    <!-- Nav -->
-    <nav class="flex justify-between items-center mb-12 border-b border-gray-800 pb-4">
-        <div class="flex items-center gap-4">
-            <img src="T:\00_Personal\logo.png" alt="HL_LOGO" class="h-10" onerror="this.style.display='none'">
-            <span class="orbitron text-cyan-400 font-bold tracking-widest uppercase">HackLogic Renderer</span>
-        </div>
-        <div class="flex gap-6 orbitron text-xs tracking-tighter dir-ltr">
-            <a href="#vulnerability" class="hover:text-[#00FFC3] transition">>_VULNERABILITY</a>
-            <a href="#h2ai" class="hover:text-[#00FFC3] transition">>_H2AI_PATCH</a>
-            <a href="#h2h" class="hover:text-[#00FFC3] transition">>_H2H_PATCH</a>
-            <a href="#resources" class="hover:text-[#00FFC3] transition">>_RESOURCES</a>
+<body class="antialiased selection:bg-electric selection:text-obsidian" dir="rtl">
+
+    <!-- COMMAND INTERFACE NAV -->
+    <nav class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-electric/20 p-4" dir="ltr">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="Logo.png" alt="HackLogic Logo"
+                    class="h-10 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,255,195,0.8)]"
+                    onerror="this.style.display='none'">
+                <div>
+                    <h1 class="text-xl font-orbitron font-bold tracking-widest text-white"><span
+                            class="text-electric neon-text-cyan">HACK</span>LOGIC</h1>
+                    <p class="text-[10px] font-orbitron text-slate-500 uppercase tracking-widest">Hacking Explained with
+                        Logic</p>
+                </div>
+            </div>
+            <div class="hidden md:flex space-x-6 text-xs font-orbitron text-electric font-bold tracking-widest">
+                <a href="#core" class="hover:text-white transition-colors">-> VULNERABILITY</a>
+                <a href="#h2ai" class="hover:text-white transition-colors">-> H2AI_PATCH</a>
+                <a href="#h2h" class="hover:text-white transition-colors">-> H2H_PATCH</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header class="mb-16">
-        <div class="inline-block border border-[#FFB800] text-[#FFB800] px-2 py-1 text-[10px] orbitron mb-4">
-            [STATUS: NEEDS REVIEW]
-        </div>
-        <h1 class="orbitron text-4xl md:text-6xl font-bold mb-6 glow-cyan tracking-tighter">[LESSON_TITLE_ORBITRON]</h1>
-        <p class="text-xl text-gray-400 max-w-3xl leading-relaxed">
-            موجز الدرس باللهجة المصرية الذكية.. هنا هيكون فيه شرح مختصر ومكثف للهدف من العملية دي.
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24 relative overflow-hidden">
+
+        <!-- EXECUTION SUMMARY HERO -->
+        <header class="max-w-4xl mx-auto space-y-6 text-right relative z-10">
+            <div class="inline-block px-3 py-1 bg-insight/10 border border-insight/50 text-insight text-xs font-orbitron font-bold tracking-widest uppercase mb-2"
+                dir="ltr">
+                STATUS: NEEDS REVIEW
+            </div>
+            <h2 class="text-4xl md:text-5xl font-orbitron font-black tracking-tight text-white uppercase leading-tight"
+                dir="ltr">
+                <span class="bracket text-electric neon-text-cyan">[CORE_CONCEPT]</span><br>
+                [LESSON_TITLE]
+            </h2>
+            <div class="border-r-2 border-electric pr-4" dir="rtl">
+                <p class="text-base text-gray-400 font-montserrat font-semibold leading-relaxed max-w-2xl">
+                    [ARABIC_SUMMARY_EGYPTIAN]
+                </p>
+            </div>
+        </header>
+
+        <!-- 0x01: Root Cause -->
+        <section id="core" class="scroll-mt-24 relative z-10">
+            <img src="insight_brain.png" alt="Insight Brain"
+                class="absolute top-0 right-0 w-64 h-64 opacity-10 mix-blend-screen pointer-events-none"
+                onerror="this.style.display='none'">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-right">
+                    <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr">
+                        <span class="text-insight neon-text-gold">-> 0x01</span> Root Cause Analysis</h3>
+                    <div class="text-gray-300 text-sm font-montserrat leading-relaxed">
+                        [ROOT_CAUSE_ARABIC_EGYPTIAN]
+                    </div>
+                </div>
+                <div class="bg-charcoal p-5 hud-border relative">
+                    <div class="absolute top-2 right-2 text-[10px] font-orbitron text-electric opacity-50" dir="ltr">
+                        TELEMETRY_LOG</div>
+                    <div class="chart-container" dir="ltr">
+                        <canvas id="driftChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 0x02: H2AI PROTOCOL -->
+        <section id="h2ai" class="scroll-mt-24 border-t border-gray-800 pt-16 relative z-10">
+            <div class="mb-10 max-w-3xl text-right">
+                <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr"><span
+                        class="text-electric neon-text-cyan">-> 0x02</span> H2AI Protocol</h3>
+                <p class="text-gray-400 font-montserrat text-sm mt-4">[H2AI_SUMMARY_ARABIC_EGYPTIAN]</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+                <div class="bg-charcoal p-6 hud-border hover:border-electric transition-colors flex flex-col items-end">
+                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
+                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">[PATCH_1_TITLE]
+                        </h4>
+                        <span
+                            class="text-[10px] font-orbitron text-electric bg-electric/10 px-2 py-1 border border-electric/20 uppercase">Execute</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4 font-montserrat">[PATCH_1_DESCRIPTION_ARABIC]</p>
+                    <div class="bg-obsidian p-4 border-r-2 border-electric font-orbitron text-xs text-electric tracking-wide uppercase leading-loose text-left w-full"
+                        dir="ltr">
+                        [PATCH_1_CODE/COMMANDS]
+                    </div>
+                </div>
+                <!-- Add more patches as needed -->
+            </div>
+        </section>
+
+        <!-- 0x03: H2H PROTOCOL -->
+        <section id="h2h" class="scroll-mt-24 border-t border-gray-800 pt-16 relative z-10">
+            <div class="mb-10 max-w-3xl text-right">
+                <h3 class="text-2xl font-orbitron font-bold text-white mb-2 uppercase tracking-widest" dir="ltr"><span
+                        class="text-electric neon-text-cyan">-> 0x03</span> H2H Protocol</h3>
+                <p class="text-gray-400 font-montserrat text-sm mt-4">[H2H_SUMMARY_ARABIC_EGYPTIAN]</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+                <div class="bg-charcoal p-6 hud-border flex flex-col items-end">
+                    <div class="flex justify-between items-center mb-4 w-full flex-row-reverse" dir="ltr">
+                        <h4 class="text-sm font-orbitron font-bold text-white tracking-widest uppercase">
+                            [H2H_TACTIC_TITLE]</h4>
+                        <span
+                            class="text-[10px] font-orbitron text-gray-400 bg-gray-800 px-2 py-1 border border-gray-700 uppercase">Coordination</span>
+                    </div>
+                    <div class="bg-obsidian p-4 border-r-2 border-electric font-montserrat font-semibold text-sm text-gray-300 w-full text-right"
+                        dir="rtl">
+                        [H2H_SCRIPT_ARABIC]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA / PLOTLY -->
+        <section class="border-t border-gray-800 pt-16 mb-20 text-right relative z-10">
+            <h3 class="text-sm font-orbitron font-bold text-white mb-6 uppercase tracking-widest" dir="ltr">Telemetry
+                Visualization <span class="text-electric"><-< /span></h3>
+            <div class="bg-charcoal p-2 hud-border relative">
+                <div class="absolute top-2 right-2 text-[10px] font-orbitron text-electric opacity-50 z-10" dir="ltr">
+                    DENSITY_PLOT</div>
+                <div id="densityPlot" class="w-full h-[400px]" dir="ltr"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-gray-900 py-6 text-center bg-obsidian" dir="ltr">
+        <p class="text-gray-600 font-orbitron text-[10px] uppercase tracking-widest">
+            <span class="text-electric">HACKLOGIC</span> // Execution Control + High-Tempo Accountability // EOF
         </p>
-    </header>
-
-    <!-- 0x01: Root Cause -->
-    <section id="vulnerability" class="mb-20 grid md:grid-cols-2 gap-8">
-        <div class="hud-border bg-charcoal p-6">
-            <h2 class="orbitron text-cyan-400 mb-4 text-sm">0x01 // ROOT_CAUSE</h2>
-            <div class="text-gray-300 leading-relaxed mb-6">
-                شرح الثغرة أو المشكلة الأساسية باللهجة المصرية.. ليه ده بيحصل وازاي نوقفه؟
-            </div>
-            <div class="diff-box text-xs">
-                - Old Vulnerable Logic<br>
-                + New Patched Logic
-            </div>
-        </div>
-        <div class="hud-border bg-charcoal p-6">
-            <canvas id="telemetryChart"></canvas>
-        </div>
-    </section>
-
-    <!-- 0x02: H2AI Patch -->
-    <section id="h2ai" class="mb-20">
-        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x02 // H2AI_PATCH (MACHINE)</h2>
-        <div class="bg-charcoal p-4 border-r-2 border-cyan-500 font-mono text-xs dir-ltr">
-            <pre><code>// Strategic code blocks for machines
-const exploit = (target) => { ... }</code></pre>
-        </div>
-    </section>
-
-    <!-- 0x03: H2H Patch -->
-    <section id="h2h" class="mb-20">
-        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x03 // H2H_PATCH (HUMAN)</h2>
-        <div class="hud-border bg-charcoal p-6">
-            <p class="text-lg leading-loose">
-                الأوامر المباشرة للبشر (سكريبتات الإقناع أو التعامل النفسي).. خطوات تنفيذية 1 -> 2 -> 3.
-            </p>
-        </div>
-    </section>
-
-    <!-- 0x04: Telemetry -->
-    <section id="telemetry" class="mb-20">
-        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x04 // TELEMETRY_VISUALIZATION</h2>
-        <div id="plotlyPlot" class="w-full h-[400px] hud-border"></div>
-    </section>
-
-    <!-- 0x05: Resources -->
-    <section id="resources" class="mb-20">
-        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x05 // INTEL_RESOURCES</h2>
-        <div class="hud-border bg-charcoal p-6">
-            <ul class="space-y-4 text-sm">
-                <li id="ref-1">
-                    [1] Author, A. (Year). *Title of Resource*. Publisher. <a href="#" class="text-cyan-400 hover:underline">Link</a>
-                </li>
-            </ul>
-        </div>
-    </section>
+    </footer>
 
     <script>
-        // Sample Chart.js
-        const ctx = document.getElementById('telemetryChart').getContext('2d');
-        new Chart(ctx, {
+        Chart.defaults.color = '#9CA3AF';
+        Chart.defaults.font.family = "'Orbitron', sans-serif";
+
+        // DRIFT CHART
+        const ctxDrift = document.getElementById('driftChart').getContext('2d');
+        new Chart(ctxDrift, {
             type: 'line',
             data: {
-                labels: ['T-10', 'T-5', 'NOW'],
-                datasets: [{
-                    label: 'Vulnerability Surface',
-                    data: [12, 19, 3],
-                    borderColor: '#00FFC3',
-                    tension: 0.4
-                }]
+                labels: ['START', 'PROCESS', 'IDLE', 'DROP', 'REBOOT'],
+                datasets: [
+                    {
+                        label: 'Active Processing',
+                        data: [95, 80, 30, 10, 85],
+                        borderColor: '#00FFC3',
+                        backgroundColor: 'rgba(0, 255, 195, 0.05)',
+                        borderWidth: 2,
+                        tension: 0,
+                        fill: true
+                    }
+                ]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: '#333' } },
-                    x: { grid: { color: '#333' } }
+                    y: { beginAtZero: true, max: 100, grid: { color: '#1E293B' } },
+                    x: { grid: { color: '#1E293B' } }
                 }
             }
         });
 
-        // Sample Plotly
-        const data = [{
-            z: [[1, 20, 30], [20, 1, 60], [30, 60, 1]],
-            type: 'heatmap',
-            colorscale: [['0.0', '#000000'], ['1.0', '#00FFC3']]
-        }];
-        Plotly.newPlot('plotlyPlot', data, {
+        // PLOTLY DENSITY
+        const trace1 = {
+            x: Array.from({ length: 500 }, () => Math.random() * 50),
+            type: 'histogram',
+            name: 'Fluff',
+            marker: { color: '#FFB800' }
+        };
+        const trace2 = {
+            x: Array.from({ length: 500 }, () => Math.random() * 50 + 20),
+            type: 'histogram',
+            name: 'Dense',
+            marker: { color: '#00FFC3' }
+        };
+        Plotly.newPlot('densityPlot', [trace1, trace2], {
+            barmode: 'overlay',
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#00FFC3' }
+            font: { color: '#9CA3AF', family: "'Orbitron', sans-serif", size: 10 },
+            margin: { t: 40, b: 40, l: 40, r: 20 },
+            legend: { orientation: 'h', x: 0.5, y: 1.1, xanchor: 'center' }
         });
     </script>
 </body>
+
 </html>
