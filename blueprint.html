@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKLOGIC_HUD_V1.0</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Blueprints & CDNs -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        :root {
+            --obsidian: #000000;
+            --charcoal: #121212;
+            --electric-cyan: #00FFC3;
+            --insight-gold: #FFB800;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .hud-border {
+            border: 1px solid var(--electric-cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 195, 0.2);
+        }
+
+        .glow-cyan { text-shadow: 0 0 10px var(--electric-cyan); }
+        .glow-gold { text-shadow: 0 0 10px var(--insight-gold); }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* References Highlight */
+        :target {
+            background-color: rgba(0, 255, 195, 0.1);
+            border-right: 4px solid var(--electric-cyan);
+            padding-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .diff-box {
+            background: #1a1a1a;
+            border-right: 2px solid #ff4444;
+            border-left: 2px solid #44ff44;
+            padding: 1rem;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="scanlines"></div>
+
+    <!-- Nav -->
+    <nav class="flex justify-between items-center mb-12 border-b border-gray-800 pb-4">
+        <div class="flex items-center gap-4">
+            <img src="T:\00_Personal\logo.png" alt="HL_LOGO" class="h-10" onerror="this.style.display='none'">
+            <span class="orbitron text-cyan-400 font-bold tracking-widest uppercase">HackLogic Renderer</span>
+        </div>
+        <div class="flex gap-6 orbitron text-xs tracking-tighter dir-ltr">
+            <a href="#vulnerability" class="hover:text-[#00FFC3] transition">>_VULNERABILITY</a>
+            <a href="#h2ai" class="hover:text-[#00FFC3] transition">>_H2AI_PATCH</a>
+            <a href="#h2h" class="hover:text-[#00FFC3] transition">>_H2H_PATCH</a>
+            <a href="#resources" class="hover:text-[#00FFC3] transition">>_RESOURCES</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="mb-16">
+        <div class="inline-block border border-[#FFB800] text-[#FFB800] px-2 py-1 text-[10px] orbitron mb-4">
+            [STATUS: NEEDS REVIEW]
+        </div>
+        <h1 class="orbitron text-4xl md:text-6xl font-bold mb-6 glow-cyan tracking-tighter">[LESSON_TITLE_ORBITRON]</h1>
+        <p class="text-xl text-gray-400 max-w-3xl leading-relaxed">
+            موجز الدرس باللهجة المصرية الذكية.. هنا هيكون فيه شرح مختصر ومكثف للهدف من العملية دي.
+        </p>
+    </header>
+
+    <!-- 0x01: Root Cause -->
+    <section id="vulnerability" class="mb-20 grid md:grid-cols-2 gap-8">
+        <div class="hud-border bg-charcoal p-6">
+            <h2 class="orbitron text-cyan-400 mb-4 text-sm">0x01 // ROOT_CAUSE</h2>
+            <div class="text-gray-300 leading-relaxed mb-6">
+                شرح الثغرة أو المشكلة الأساسية باللهجة المصرية.. ليه ده بيحصل وازاي نوقفه؟
+            </div>
+            <div class="diff-box text-xs">
+                - Old Vulnerable Logic<br>
+                + New Patched Logic
+            </div>
+        </div>
+        <div class="hud-border bg-charcoal p-6">
+            <canvas id="telemetryChart"></canvas>
+        </div>
+    </section>
+
+    <!-- 0x02: H2AI Patch -->
+    <section id="h2ai" class="mb-20">
+        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x02 // H2AI_PATCH (MACHINE)</h2>
+        <div class="bg-charcoal p-4 border-r-2 border-cyan-500 font-mono text-xs dir-ltr">
+            <pre><code>// Strategic code blocks for machines
+const exploit = (target) => { ... }</code></pre>
+        </div>
+    </section>
+
+    <!-- 0x03: H2H Patch -->
+    <section id="h2h" class="mb-20">
+        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x03 // H2H_PATCH (HUMAN)</h2>
+        <div class="hud-border bg-charcoal p-6">
+            <p class="text-lg leading-loose">
+                الأوامر المباشرة للبشر (سكريبتات الإقناع أو التعامل النفسي).. خطوات تنفيذية 1 -> 2 -> 3.
+            </p>
+        </div>
+    </section>
+
+    <!-- 0x04: Telemetry -->
+    <section id="telemetry" class="mb-20">
+        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x04 // TELEMETRY_VISUALIZATION</h2>
+        <div id="plotlyPlot" class="w-full h-[400px] hud-border"></div>
+    </section>
+
+    <!-- 0x05: Resources -->
+    <section id="resources" class="mb-20">
+        <h2 class="orbitron text-cyan-400 mb-6 text-sm">0x05 // INTEL_RESOURCES</h2>
+        <div class="hud-border bg-charcoal p-6">
+            <ul class="space-y-4 text-sm">
+                <li id="ref-1">
+                    [1] Author, A. (Year). *Title of Resource*. Publisher. <a href="#" class="text-cyan-400 hover:underline">Link</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        // Sample Chart.js
+        const ctx = document.getElementById('telemetryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['T-10', 'T-5', 'NOW'],
+                datasets: [{
+                    label: 'Vulnerability Surface',
+                    data: [12, 19, 3],
+                    borderColor: '#00FFC3',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#333' } },
+                    x: { grid: { color: '#333' } }
+                }
+            }
+        });
+
+        // Sample Plotly
+        const data = [{
+            z: [[1, 20, 30], [20, 1, 60], [30, 60, 1]],
+            type: 'heatmap',
+            colorscale: [['0.0', '#000000'], ['1.0', '#00FFC3']]
+        }];
+        Plotly.newPlot('plotlyPlot', data, {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#00FFC3' }
+        });
+    </script>
+</body>
+</html>
